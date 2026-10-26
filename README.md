@@ -9,4 +9,4 @@ Live site: https://peasant98.github.io/tashop/
 4. In `products.js`, find the piece and set `price: 25` and `stripe: "https://buy.stripe.com/..."`.
 5. When it sells out, set `status: "sold"`.
 
-Pieces without a Stripe link show "Ask Tash about this", which opens an Instagram DM.
+Pieces without a price + Stripe link show "Ask Tash to buy", which opens an Instagram DM. Set `qty` to the number in stock; `qty: 0` marks it sold out.

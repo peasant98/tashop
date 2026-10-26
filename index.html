@@ -5,110 +5,205 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Tashop Crafts</title>
 <meta name="description" content="Unique handmade jewelry designed by Tash, California.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: a jeweler's tray — masthead, category tabs, then an even grid of pieces on pearl-grey; teal ink with a marigold accent */
+/* Layout: storefront — top bar (logo, search), filter rail + sortable results grid, product detail view with gallery and buy box */
 :root{
-  --bg:#f1f0ee; --card:#ffffff; --ink:#123c3a; --muted:#5b6f6c; --line:#dcdedb;
-  --accent:#d98e1f; --sold:#9a3b2f;
-  --display:"Italiana","Didot","Bodoni 72",Georgia,serif;
+  --bg:#f3f3f1; --card:#ffffff; --ink:#14302e; --muted:#5f6f6c; --line:#dfe1de;
+  --bar:#123c3a; --barink:#f4efe3; --accent:#e39a26; --ok:#2f7a3d; --low:#b5502f;
+  --display:"Italiana","Didot",Georgia,serif;
   --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0f1918; --card:#172321; --ink:#e3ece9; --muted:#97aba6; --line:#26332f; --accent:#f0a93a; --sold:#e07a69; color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f1918; --card:#172321; --ink:#e3ece9; --muted:#97aba6; --line:#26332f; --accent:#f0a93a; --sold:#e07a69; color-scheme:dark}
+  --bg:#0e1716; --card:#162220; --ink:#e4ece9; --muted:#97aaa5; --line:#27352f; --bar:#0a2523; --barink:#f4efe3; --accent:#f0aa3c; --ok:#6cc27d; --low:#ec8a68; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1716; --card:#162220; --ink:#e4ece9; --muted:#97aaa5; --line:#27352f; --bar:#0a2523; --barink:#f4efe3; --accent:#f0aa3c; --ok:#6cc27d; --low:#ec8a68; color-scheme:dark}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);padding-inline:16px;padding-block:0 56px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
 img{max-width:100%;display:block}
 [hidden]{display:none!important}
-.wrap{max-width:1120px;margin:0 auto}
-header{padding-block:44px 20px;display:grid;gap:10px;justify-items:start}
-.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,9vw,84px);line-height:.95;margin:0;letter-spacing:.01em}
-.lede{max-width:52ch;color:var(--muted);margin:0}
-.lede a{color:var(--ink)}
-nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;flex-wrap:wrap;padding-block:12px;border-bottom:1px solid var(--line)}
-nav button{font:500 14px var(--body);color:var(--ink);background:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
-nav button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-nav .count{margin-left:auto;align-self:center;font-size:13px;color:var(--muted)}
-button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:22px;margin-top:22px}
-.piece{display:grid;grid-template-rows:auto 1fr;background:var(--card);border-radius:4px;overflow:hidden}
-.ph{position:relative;aspect-ratio:4/5;background:var(--line);cursor:zoom-in;border:0;padding:0;width:100%}
-.ph img{width:100%;height:100%;object-fit:cover}
-.badge{position:absolute;top:10px;left:10px;font:600 11px var(--body);letter-spacing:.1em;text-transform:uppercase;background:var(--card);color:var(--sold);padding:3px 8px;border-radius:2px}
-.info{padding:14px 14px 16px;display:grid;gap:6px;align-content:start}
-.row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.name{font-weight:600;margin:0;font-size:16px}
-.price{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-.desc{margin:0;font-size:14px;color:var(--muted)}
-.buy{margin-top:8px;display:inline-flex;justify-content:center;align-items:center;gap:6px;text-decoration:none;font:600 14px var(--body);padding:10px 12px;border-radius:3px;background:var(--ink);color:var(--bg)}
-.buy.ask{background:none;color:var(--ink);border:1.5px solid var(--ink)}
-.buy.sold{background:none;color:var(--muted);border:1.5px dashed var(--line);pointer-events:none}
-.piece.is-sold img{filter:grayscale(.7);opacity:.75}
-footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px;color:var(--muted);font-size:14px}
-footer a{color:var(--ink)}
-dialog{border:0;padding:0;background:transparent;max-width:min(92vw,720px)}
-dialog::backdrop{background:rgba(8,16,15,.82)}
-dialog img{max-height:86vh;width:auto;margin:auto;border-radius:3px}
-dialog p{color:#fff;text-align:center;margin:10px 0 0;font-family:var(--display);font-size:24px}
-@media (max-width:560px){.grid{grid-template-columns:1fr 1fr;gap:12px}.info{padding:10px}.name{font-size:14px}.desc{font-size:12.5px}.buy{font-size:12.5px;padding:8px}}
-@media (prefers-reduced-motion:no-preference){.ph img{transition:transform .35s}.ph:hover img{transform:scale(1.03)}}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* top bar */
+.top{position:sticky;top:0;z-index:10;background:var(--bar);color:var(--barink);padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.logo{font-family:var(--display);font-size:28px;line-height:1;text-decoration:none;white-space:nowrap}
+.search{flex:1 1 260px;display:flex;min-width:0}
+.search input{flex:1;min-width:0;border:0;border-radius:6px 0 0 6px;padding:10px 12px;font:15px var(--body);background:#fff;color:#14302e}
+.search button{border:0;border-radius:0 6px 6px 0;background:var(--accent);color:#14302e;padding:0 16px;font-weight:700;cursor:pointer}
+.toplinks{display:flex;gap:16px;font-size:14px}
+.toplinks a{text-decoration:none;opacity:.9}
+.cats{background:#1c4a47;color:var(--barink);display:flex;gap:4px;padding:6px 12px;overflow-x:auto}
+.cats button{background:none;border:1px solid transparent;color:var(--barink);padding:5px 10px;border-radius:4px;cursor:pointer;white-space:nowrap;font-size:14px}
+.cats button[aria-pressed="true"],.cats button:hover{border-color:var(--barink)}
+.page{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:18px 56px}
+/* listing */
+.listing{display:grid;grid-template-columns:210px 1fr;gap:24px;align-items:start}
+.rail{display:grid;gap:18px;font-size:14px;position:sticky;top:120px}
+.rail h3{margin:0 0 6px;font-size:14px}
+.rail label{display:flex;gap:8px;align-items:center;padding:2px 0;cursor:pointer}
+#fColors label{text-transform:capitalize}
+.rail input{accent-color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;border:1px solid var(--line)}
+.results{min-width:0}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.rhead p{margin:0;color:var(--muted)}
+.rhead b{color:var(--ink)}
+select{font:14px var(--body);padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:14px}
+.tile{background:var(--card);border-radius:6px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;text-decoration:none;border:1px solid var(--line)}
+.tile .ph{aspect-ratio:1;background:var(--bg)}
+.tile .ph img{width:100%;height:100%;object-fit:cover}
+.tile .tx{padding:10px 12px 14px;display:grid;gap:4px;align-content:start}
+.tile h2{font-size:15px;font-weight:500;margin:0;line-height:1.3}
+.tile:hover h2{color:var(--accent)}
+.pr{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.pr sup{font-size:11px;vertical-align:8px}
+.ask{font-size:14px;color:var(--muted)}
+.stock{font-size:13px}
+.stock.ok{color:var(--ok)} .stock.low{color:var(--low)} .stock.out{color:var(--muted)}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--accent);color:#14302e;padding:2px 6px;border-radius:3px;justify-self:start}
+.empty{padding:40px 0;color:var(--muted)}
+/* detail */
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:14px}
+.crumbs a{color:var(--ink)}
+.detail{display:grid;grid-template-columns:72px minmax(0,1.2fr) minmax(0,1fr) 260px;gap:20px;align-items:start}
+.thumbs{display:grid;gap:8px}
+.thumbs button{padding:0;border:2px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;aspect-ratio:1;background:var(--card)}
+.thumbs button[aria-current="true"]{border-color:var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.main{background:var(--card);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.main img{width:100%;max-height:640px;object-fit:contain}
+.about h1{font-family:var(--body);font-size:24px;font-weight:600;line-height:1.25;margin:0 0 4px}
+.about .by{font-size:14px;margin:0 0 10px}
+.about .by a{color:var(--ok)}
+.about hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.about ul{padding-left:18px;margin:8px 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:10px}
+.box .pr{font-size:28px}
+.btn{display:block;text-align:center;text-decoration:none;border:0;border-radius:999px;padding:11px;font-weight:600;cursor:pointer}
+.btn.buy{background:var(--accent);color:#14302e}
+.btn.dm{background:var(--bar);color:var(--barink)}
+.btn.off{background:var(--line);color:var(--muted);pointer-events:none}
+.small{font-size:13px;color:var(--muted);margin:0}
+.more{margin-top:34px}
+.more h2{font-size:18px;margin:0 0 12px}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px,180px);gap:12px;overflow-x:auto;padding-bottom:6px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 24px}
+@media (max-width:980px){.detail{grid-template-columns:1fr}.thumbs{grid-auto-flow:column;grid-auto-columns:64px;order:2}.main{order:1}.about{order:3}.box{order:4}}
+@media (max-width:760px){.listing{grid-template-columns:1fr}.rail{position:static;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.grid{grid-template-columns:1fr 1fr;gap:10px}.toplinks{display:none}.pr{font-size:17px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <span class="eyebrow">Handmade in California</span>
-    <h1>Tashop Crafts</h1>
-    <p class="lede">Unique handmade jewelry designed by Tash. Every piece is one of a kind or made in small runs. Follow along at <a href="https://www.instagram.com/tashop_crafts/" target="_blank" rel="noopener">@tashop_crafts</a>.</p>
-  </header>
-  <nav aria-label="Categories">
-    <button data-f="all" aria-pressed="true">All</button>
-    <button data-f="earrings" aria-pressed="false">Earrings</button>
-    <button data-f="bracelets" aria-pressed="false">Bracelets</button>
-    <button data-f="necklaces" aria-pressed="false">Necklaces</button>
-    <span class="count" id="count"></span>
-  </nav>
-  <main class="grid" id="grid"></main>
+<header class="top">
+  <a class="logo" href="#">Tashop Crafts</a>
+  <form class="search" id="searchForm" role="search">
+    <input id="q" type="search" placeholder="Search earrings, jhumkas, pearls…" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
+  <nav class="toplinks"><a href="https://www.instagram.com/tashop_crafts/" target="_blank" rel="noopener">Instagram</a><a href="https://ig.me/m/tashop_crafts" target="_blank" rel="noopener">Custom orders</a></nav>
+</header>
+<nav class="cats" id="cats" aria-label="Departments">
+  <button data-c="all" aria-pressed="true">All jewelry</button>
+  <button data-c="earrings" aria-pressed="false">Earrings</button>
+  <button data-c="jhumka" aria-pressed="false">Jhumkas</button>
+  <button data-c="bracelets" aria-pressed="false">Bracelets</button>
+  <button data-c="necklaces" aria-pressed="false">Necklaces</button>
+  <button data-c="new" aria-pressed="false">New arrivals</button>
+</nav>
+
+<div class="page">
+  <section id="listView" class="listing">
+    <aside class="rail" aria-label="Filters">
+      <div><h3>Availability</h3><label><input type="checkbox" id="fBuy"> Buy online now</label><label><input type="checkbox" id="fStock" checked> In stock</label></div>
+      <div><h3>Color</h3><div id="fColors"></div></div>
+      <div><h3>Price</h3><div id="fPrice"></div></div>
+    </aside>
+    <div class="results">
+      <div class="rhead"><p id="rcount"></p>
+        <label>Sort by <select id="sort"><option value="new">Newest arrivals</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="az">Name</option></select></label>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="detailView" hidden></section>
+
   <footer>
-    <span>Payments are processed securely by Stripe.</span>
-    <span>Custom orders and questions: DM <a href="https://ig.me/m/tashop_crafts" target="_blank" rel="noopener">@tashop_crafts</a></span>
+    <span>Handmade in California by Tash.</span>
+    <span>Checkout is handled securely by Stripe.</span>
+    <span>Questions or custom orders: DM <a href="https://ig.me/m/tashop_crafts" target="_blank" rel="noopener">@tashop_crafts</a></span>
   </footer>
 </div>
-<dialog id="lb"><img id="lbImg" alt=""><p id="lbCap"></p></dialog>
+
 <script src="products.js"></script>
 <script>
-const grid=document.getElementById("grid"),count=document.getElementById("count"),lb=document.getElementById("lb");
-const DM="https://ig.me/m/tashop_crafts";
+const P=window.PRODUCTS, DM="https://ig.me/m/tashop_crafts", $=id=>document.getElementById(id);
+const SW={red:"#c0392b",pearl:"#efe6d8",gold:"#d4a73a",silver:"#b9bec4",amber:"#c47a1c",black:"#222",clear:"#e8f1f4",blue:"#2b8aa8",green:"#5fae7a",copper:"#b0603a",pink:"#e59bb6",multi:"conic-gradient(red,orange,yellow,green,blue,violet,red)"};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function card(p){
-  const sold=p.status==="sold", live=!sold&&p.stripe&&p.price!=null;
-  const btn=sold?`<span class="buy sold">Sold</span>`
-    :live?`<a class="buy" href="${esc(p.stripe)}" target="_blank" rel="noopener">Buy · $${p.price}</a>`
-    :`<a class="buy ask" href="${DM}" target="_blank" rel="noopener">Ask Tash about this</a>`;
-  return `<article class="piece${sold?" is-sold":""}">
-    <button class="ph" data-id="${p.id}" aria-label="Enlarge ${esc(p.name)}"><img src="img/${p.id}.jpg" alt="${esc(p.name)}" loading="lazy">${sold?'<span class="badge">Sold</span>':""}</button>
-    <div class="info"><div class="row"><h2 class="name">${esc(p.name)}</h2>${p.price!=null&&!sold?`<span class="price">$${p.price}</span>`:""}</div>
-    <p class="desc">${esc(p.desc)}</p>${btn}</div></article>`;
+const buyable=p=>p.qty>0&&p.price!=null&&!!p.stripe;
+const isNew=p=>P.map(x=>x.posted).sort().reverse().indexOf(p.posted)<6;
+const imgs=p=>[`img/${p.id}.jpg`,...Array.from({length:(p.photos||1)-1},(_,i)=>`img/${p.id}-${i+2}.jpg`)];
+const price=p=>p.price==null?`<span class="ask">Price on request</span>`:`<span class="pr"><sup>$</sup>${Math.floor(p.price)}<sup>${String(Math.round(p.price%1*100)).padStart(2,"0")}</sup></span>`;
+const stock=p=>p.qty<=0?`<span class="stock out">Sold out</span>`:p.qty===1?`<span class="stock low">Only 1 left · one of a kind</span>`:p.qty<=3?`<span class="stock low">Only ${p.qty} left</span>`:`<span class="stock ok">In stock</span>`;
+const state={cat:"all",q:"",colors:new Set(),band:"any",buy:false,stock:true,sort:"new"};
+
+// filters
+const colors=[...new Set(P.flatMap(p=>p.colors))].sort();
+$("fColors").innerHTML=colors.map(c=>`<label><input type="checkbox" value="${c}"><span class="dot" style="background:${SW[c]||"#ccc"}"></span>${c}</label>`).join("");
+const BANDS=[["any","Any price"],["u25","Under $25"],["25-50","$25 to $50"],["o50","$50 & up"],["ask","Price on request"]];
+$("fPrice").innerHTML=BANDS.map(([v,l],i)=>`<label><input type="radio" name="band" value="${v}"${i?"":" checked"}> ${l}</label>`).join("");
+const inBand=p=>{const b=state.band,x=p.price;return b==="any"||(b==="ask"?x==null:x!=null&&(b==="u25"?x<25:b==="o50"?x>=50:x>=25&&x<50))};
+
+function list(){
+  let r=P.filter(p=>
+    (state.cat==="all"||p.type===state.cat||(state.cat==="jhumka"&&/jhumka/i.test(p.name))||(state.cat==="new"&&isNew(p)))&&
+    (!state.q||(p.name+" "+p.desc+" "+p.colors.join(" ")+" "+p.type).toLowerCase().includes(state.q))&&
+    (!state.colors.size||p.colors.some(c=>state.colors.has(c)))&&inBand(p)&&
+    (!state.buy||buyable(p))&&(!state.stock||p.qty>0));
+  const s=state.sort,pv=p=>p.price??Infinity;
+  r.sort(s==="low"?(a,b)=>pv(a)-pv(b):s==="high"?(a,b)=>(b.price??-1)-(a.price??-1):s==="az"?(a,b)=>a.name.localeCompare(b.name):(a,b)=>b.posted.localeCompare(a.posted));
+  $("rcount").innerHTML=`<b>${r.length}</b> result${r.length===1?"":"s"}${state.q?` for <b>"${esc(state.q)}"</b>`:""}`;
+  $("grid").innerHTML=r.map(tile).join("")||`<p class="empty">No pieces match. Try clearing a filter, or <a href="${DM}" target="_blank" rel="noopener">ask Tash about a custom piece</a>.</p>`;
 }
-function render(f){
-  const list=PRODUCTS.filter(p=>f==="all"||p.type===f).sort((a,b)=>(a.status==="sold")-(b.status==="sold"));
-  grid.innerHTML=list.map(card).join("");
-  count.textContent=`${list.filter(p=>p.status!=="sold").length} pieces`;
+const tile=p=>`<a class="tile" href="#p/${p.id}"><div class="ph"><img src="img/${p.id}.jpg" alt="" loading="lazy"></div>
+  <div class="tx">${isNew(p)?'<span class="badge">New</span>':""}<h2>${esc(p.name)}</h2>${price(p)}${stock(p)}</div></a>`;
+
+function detail(id){
+  const p=P.find(x=>x.id===id); if(!p){location.hash="";return}
+  const g=imgs(p), cta=p.qty<=0?`<span class="btn off">Sold out</span>`
+    :buyable(p)?`<a class="btn buy" href="${esc(p.stripe)}" target="_blank" rel="noopener">Buy now</a>`
+    :`<a class="btn dm" href="${DM}" target="_blank" rel="noopener">Ask Tash to buy</a><p class="small">Online checkout for this piece is coming soon. Message Tash on Instagram to buy it now.</p>`;
+  const rel=P.filter(x=>x.id!==p.id&&x.type===p.type&&x.qty>0).slice(0,10);
+  $("detailView").innerHTML=`
+  <div class="crumbs"><a href="#">All jewelry</a> › <a href="#" data-cat="${p.type}">${p.type[0].toUpperCase()+p.type.slice(1)}</a> › ${esc(p.name)}</div>
+  <div class="detail">
+    <div class="thumbs">${g.map((s,i)=>`<button data-i="${i}" aria-current="${!i}" aria-label="Photo ${i+1}"><img src="${s}" alt=""></button>`).join("")}</div>
+    <div class="main"><img id="mainImg" src="${g[0]}" alt="${esc(p.name)}"></div>
+    <div class="about"><h1>${esc(p.name)}</h1><p class="by">Handmade by <a href="https://www.instagram.com/tashop_crafts/" target="_blank" rel="noopener">Tashop Crafts</a></p><hr>
+      ${price(p)}<hr><p>${esc(p.desc)}</p>
+      <ul><li>Handmade in California</li><li>Colors: ${p.colors.join(", ")}</li><li>First shown ${new Date(p.posted+"T12:00").toLocaleDateString("en-US",{month:"long",year:"numeric"})}</li></ul></div>
+    <aside class="box">${price(p)}${stock(p)}${cta}<p class="small">Ships from California. Secure checkout by Stripe.</p></aside>
+  </div>
+  ${rel.length?`<div class="more"><h2>More ${p.type}</h2><div class="strip">${rel.map(tile).join("")}</div></div>`:""}`;
+  $("detailView").querySelectorAll(".thumbs button").forEach(b=>b.onclick=()=>{
+    $("mainImg").src=g[b.dataset.i];$("detailView").querySelectorAll(".thumbs button").forEach(x=>x.setAttribute("aria-current",x===b))});
+  const c=$("detailView").querySelector("[data-cat]"); c.onclick=e=>{e.preventDefault();setCat(p.type);location.hash=""};
 }
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-pressed",x===b));render(b.dataset.f);
-});
-grid.addEventListener("click",e=>{
-  const b=e.target.closest(".ph");if(!b)return;const p=PRODUCTS.find(x=>x.id===b.dataset.id);
-  document.getElementById("lbImg").src=`img/${p.id}.jpg`;document.getElementById("lbImg").alt=p.name;
-  document.getElementById("lbCap").textContent=p.name;lb.showModal();
-});
-lb.addEventListener("click",()=>lb.close());
-render("all");
+function route(){
+  const m=location.hash.match(/^#p\/(.+)$/);
+  $("listView").hidden=!!m; $("detailView").hidden=!m;
+  if(m){detail(decodeURIComponent(m[1]));scrollTo(0,0)} else list();
+}
+function setCat(c){state.cat=c;document.querySelectorAll("#cats button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===c))}
+$("cats").onclick=e=>{const b=e.target.closest("button");if(!b)return;setCat(b.dataset.c);if(location.hash)location.hash="";else list()};
+$("searchForm").onsubmit=e=>{e.preventDefault();state.q=$("q").value.trim().toLowerCase();if(location.hash)location.hash="";else list()};
+$("q").oninput=()=>{state.q=$("q").value.trim().toLowerCase();if(!location.hash)list()};
+$("fColors").onchange=e=>{e.target.checked?state.colors.add(e.target.value):state.colors.delete(e.target.value);list()};
+$("fPrice").onchange=e=>{state.band=e.target.value;list()};
+$("fBuy").onchange=e=>{state.buy=e.target.checked;list()};
+$("fStock").onchange=e=>{state.stock=e.target.checked;list()};
+$("sort").onchange=e=>{state.sort=e.target.value;list()};
+addEventListener("hashchange",route); route();
 </script>
 </body>
 </html>
